@@ -1,11 +1,12 @@
 from dataclasses import dataclass
+from typing import Tuple
 
 
 @dataclass()
 class MatrixObject:
     content: list[list[int]]
     size: int
-    participant: int
+    count_participants: str
 
 
 class Matrix:
@@ -17,8 +18,8 @@ class Matrix:
         count_elements = 0
         for _ in range(size):
             mx.append([1] * size)
-        print('Далее вводите координаты нулевых элементов в ввиде: XY, гдe X - номер строки, Y - номер столбца. Для '
-              'прекращения ввода координат, введите "end".')
+        print("Далее вводите координаты нулевых элементов в ввиде: XY, гдe X - номер строки, Y - номер столбца. Для "
+              "прекращения ввода координат, введите 'end'.")
         while True:
             if count_elements < size ** 2:
                 print(f'Введите координату нулевого элемента')
@@ -36,17 +37,13 @@ class Matrix:
 
             else:
                 break
-
+        count_participants = input("Введите номер участника, выбывшего с рынка (номер строки и столбца должен "
+                                   "совпадать,\nтк участники находятся на главной диагонали, если необходимо "
+                                   "отследить всех участников, введите 'all': ")
         return MatrixObject(
             content=mx,
             size=size,
-            participant=int(
-                input(
-                    'Введите номер участника, выбывшего с рынка (номер строки и столбца должен '
-                    'совпадать,\nтк участники '
-                    'находятся на главной диагонали): '
-                )
-            )
+            count_participants=count_participants,
 
         )
 

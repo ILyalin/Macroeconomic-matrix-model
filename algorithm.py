@@ -20,12 +20,18 @@ def build_model(matrix: MatrixObject, num_current_participant: int) -> MatrixObj
             return matrix
 
 
-def calculate_tolerance_risk_groups(final_matrix: MatrixObject) -> (list, list):
+def calculate_tolerance_risk_groups(final_matrix: MatrixObject, participant: int) -> (list, list):
     """Calculation of groups"""
     arr_tol = set()
     for line in final_matrix.content:
         for el in range(len(line)):
             if line[el] != -1:
                 arr_tol.add(el)
-    arr_risk = set(i for i in range(final_matrix.size) if i != final_matrix.participant - 1 and i not in arr_tol)
+    arr_risk = set(i for i in range(final_matrix.size) if i != participant - 1 and i not in arr_tol)
     return [t + 1 for t in arr_tol], [r + 1 for r in arr_risk]
+
+
+def change(matrix: MatrixObject):
+    m = copy.deepcopy(matrix)
+    m.content[0] = 0
+    return m
