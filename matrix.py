@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 
+
 @dataclass()
 class MatrixObject:
     content: list[list[int]]
@@ -12,22 +13,28 @@ class Matrix:
     def input_matrix(self) -> MatrixObject:
         """Entering matrix"""
         size = int(input('Введите размер матрицы: '))
-        mx: list[list[int]] = list()
-
+        mx: list[list[int]] = []
+        count_elements = 0
+        for _ in range(size):
+            mx.append([1] * size)
+        print('Далее вводите координаты нулевых элементов в ввиде: XY, гдe X - номер строки, Y - номер столбца. Для '
+              'прекращения ввода координат, введите "end".')
         while True:
-            for i in range(size):
-                print(f'Введите {i + 1}-ю строку матрицы через пробел: ')
-                line = list(map(int, input().split()))
-                if len(line) == size:
-                    mx.append(line)
-                    print(i)
+            if count_elements < size ** 2:
+                print(f'Введите координату нулевого элемента')
+                input_strike = input()
+                if input_strike == 'end':
+                    break
+                coordinate_line, coordinate_column = int(input_strike[0]), int(input_strike[1])
+                if 0 <= coordinate_line <= size and 0 <= coordinate_column <= size:
+                    mx[coordinate_line - 1][coordinate_column - 1] = 0
+                    count_elements += 1
                 else:
                     print(
-                        '\nНекорректная длина строки, введите значения матрицы построчно, в соответствии с указанными '
+                        'Некорректная координата, продолжайте вводить координаты, в соответствии с указанными '
                         'размерами!')
-                    mx.clear()
-                    break
-            if len(mx) == size:
+
+            else:
                 break
 
         return MatrixObject(
@@ -40,6 +47,7 @@ class Matrix:
                     'находятся на главной диагонали): '
                 )
             )
+
         )
 
     def output_final_mx(self, fin_mx: MatrixObject) -> None:
