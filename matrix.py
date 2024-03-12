@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from typing import Tuple
 
 
 @dataclass()
@@ -7,6 +6,7 @@ class MatrixObject:
     content: list[list[int]]
     size: int
     count_participants: str
+    number_significant_el: int
 
 
 class Matrix:
@@ -44,6 +44,7 @@ class Matrix:
             content=mx,
             size=size,
             count_participants=count_participants,
+            number_significant_el=size ** 2 - count_elements
 
         )
 

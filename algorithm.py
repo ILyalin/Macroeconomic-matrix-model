@@ -1,4 +1,7 @@
-from matrix import MatrixObject
+import copy
+import itertools
+
+from matrix import MatrixObject, Matrix
 
 
 def build_model(matrix: MatrixObject, num_current_participant: int) -> MatrixObject:
@@ -31,7 +34,32 @@ def calculate_tolerance_risk_groups(final_matrix: MatrixObject, participant: int
     return [t + 1 for t in arr_tol], [r + 1 for r in arr_risk]
 
 
-def change(matrix: MatrixObject):
-    m = copy.deepcopy(matrix)
-    m.content[0] = 0
-    return m
+def calculate_structural_protection_factor(matrix: MatrixObject):
+    number_p_destroy_market = []
+    comb = list(itertools.permutations([i + 1 for i in range(matrix.size)]))
+    for p_first in range(1, matrix.size + 1):
+        f = True
+        build_mx = copy.deepcopy(matrix)
+        count_p = 1
+        build_mx = build_model(matrix=build_mx,
+                               num_current_participant=p_first - 1)
+        if all(line.count(-1) == build_mx.size for line in build_mx.content):
+            number_p_destroy_market.append(count_p)
+        else:
+            while f:
+                arr = []
+                for p_second in comb:
+                    build_mx_temp = copy.deepcopy(build_mx)
+                    count_p = 1
+                    for j in range(len(p_second)):
+                        if p_second[j] != p_first:
+                            count_p += 1
+                            build_mx_temp = build_model(matrix=build_mx_temp,
+                                                        num_current_participant=p_second[j] - 1)
+                            if all(line.count(-1) == build_mx_temp.size for line in build_mx_temp.content):
+                                arr.append(count_p)
+                                f = False
+                                break
+            number_p_destroy_market.append(min(arr))
+
+    return min(number_p_destroy_market)
