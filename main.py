@@ -1,12 +1,13 @@
 import copy
 
-from matrix import Matrix, MatrixObject
+from matrix import MatrixObject, output_final_mx, input_matrix, print_matrix
 from algorithm import build_model, calculate_tolerance_risk_groups, calculate_structural_protection_factor
 
 
 def main():
-    matrix = Matrix()
-    entered_matrix: MatrixObject = matrix.input_matrix()
+    entered_matrix: MatrixObject = input_matrix()
+    print('\nИтоговая матрицa: ')
+    print_matrix(entered_matrix.content)
     participants = entered_matrix.count_participants
     if participants == "all":
         count_participants = entered_matrix.size
@@ -19,7 +20,7 @@ def main():
         final_mx: MatrixObject = build_model(matrix=tmp_entered_matrix,
                                              num_current_participant=participant - 1)
         print(f'\nКритерии значимости {participant}-го участника:\n')
-        matrix.output_final_mx(final_mx)
+        output_final_mx(final_mx)
         group_tolerance, group_risk = calculate_tolerance_risk_groups(final_matrix=final_mx, participant=participant)
         index_tolerance, index_risk = len(group_tolerance), len(group_risk)
         print(
