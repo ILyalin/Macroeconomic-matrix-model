@@ -6,7 +6,7 @@ from algorithm import build_model, calculate_tolerance_risk_groups, calculate_st
 
 def main():
     entered_matrix: MatrixObject = input_matrix()
-    print('\nИтоговая матрицa: ')
+    print('\nВведёная матрицa: ')
     print_matrix(entered_matrix.content)
     participants = entered_matrix.count_participants
     if participants == "all":
