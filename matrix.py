@@ -17,18 +17,18 @@ class Matrix:
         mx: list[list[int]] = []
         count_elements = 0
         for _ in range(size):
-            mx.append([1] * size)
-        print("Далее вводите координаты нулевых элементов в ввиде: XY, гдe X - номер строки, Y - номер столбца. Для "
+            mx.append([0] * size)
+        print("Далее вводите координаты ненулевых элементов в ввиде: X Y, гдe X - номер строки, Y - номер столбца. Для "
               "прекращения ввода координат, введите 'end'.")
         while True:
             if count_elements < size ** 2:
-                print(f'Введите координату нулевого элемента')
+                print(f'Введите координату ненулевого элемента: ')
                 input_strike = input()
                 if input_strike == 'end':
                     break
-                coordinate_line, coordinate_column = int(input_strike[0]), int(input_strike[1])
+                coordinate_line, coordinate_column = list(map(int, input_strike.split()))
                 if 0 <= coordinate_line <= size and 0 <= coordinate_column <= size:
-                    mx[coordinate_line - 1][coordinate_column - 1] = 0
+                    mx[coordinate_line - 1][coordinate_column - 1] = 1
                     count_elements += 1
                 else:
                     print(
@@ -44,7 +44,7 @@ class Matrix:
             content=mx,
             size=size,
             count_participants=count_participants,
-            number_significant_el=size ** 2 - count_elements
+            number_significant_el=count_elements
 
         )
 

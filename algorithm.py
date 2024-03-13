@@ -1,7 +1,7 @@
 import copy
 import itertools
 
-from matrix import MatrixObject, Matrix
+from matrix import MatrixObject
 
 
 def build_model(matrix: MatrixObject, num_current_participant: int) -> MatrixObject:
@@ -45,6 +45,7 @@ def calculate_structural_protection_factor(matrix: MatrixObject):
                                num_current_participant=p_first - 1)
         if all(line.count(-1) == build_mx.size for line in build_mx.content):
             number_p_destroy_market.append(count_p)
+            #break
         else:
             while f:
                 arr = []
